@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Market</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #ff6b35;
+    --secondary: #ffd23f;
+    --dark: #1a1a2e;
+    --card-bg: #ffffff;
+    --bg: #fff8f5;
+    --text: #2d2d2d;
+    --muted: #888;
+    --shadow: 0 8px 32px rgba(255,107,53,0.13);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, var(--dark) 0%, #16213e 60%, #0f3460 100%);
+    padding: 36px 20px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(255,107,53,0.22) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; right: -40px;
+    width: 160px; height: 160px;
+    background: radial-gradient(circle, rgba(255,210,63,0.18) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .welcome-text {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1rem;
+    color: var(--secondary);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.92;
+  }
+  .brand-name {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+    position: relative;
+    z-index: 1;
+  }
+  .brand-name span {
+    color: var(--primary);
+  }
+  .tagline {
+    margin-top: 8px;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 1px;
+  }
+
+  /* PRODUCTS GRID */
+  .products-section {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 16px 80px;
+  }
+
+  .section-label {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(to right, var(--primary), transparent);
+    border-radius: 2px;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+  }
+
+  .product-card {
+    background: var(--card-bg);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), box-shadow 0.22s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    position: relative;
+    border: 2px solid transparent;
+    animation: fadeInUp 0.4s ease both;
+  }
+  .product-card:hover {
+    transform: translateY(-6px) scale(1.025);
+    box-shadow: 0 18px 48px rgba(255,107,53,0.2);
+    border-color: var(--primary);
+  }
+  .product-card img {
+    width: 100%;
+    height: 185px;
+    object-fit: cover;
+    display: block;
+    background: #f3ece8;
+  }
+  .product-info {
+    padding: 12px 14px 14px;
+  }
+  .product-name {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 600;
+    font-size: 0.97rem;
+    color: var(--dark);
+    line-height: 1.3;
+    margin-bottom: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .platform-badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 2px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .badge-amazon { background: #fff3e0; color: #e65c00; }
+  .badge-flipkart { background: #e8f4fd; color: #2874f0; }
+  .badge-meesho { background: #fce4f3; color: #c2185b; }
+  .badge-other { background: #f3e5f5; color: #7b1fa2; }
+
+  .buy-btn {
+    display: block;
+    width: calc(100% - 28px);
+    margin: 0 14px 14px;
+    background: linear-gradient(90deg, var(--primary), #ff8c42);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 0;
+    font-family: 'Baloo 2', cursive;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: opacity 0.18s;
+    text-align: center;
+    text-decoration: none;
+  }
+  .buy-btn:hover { opacity: 0.88; }
+
+  .empty-state {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+  }
+  .empty-state .emoji { font-size: 3rem; margin-bottom: 12px; }
+  .empty-state p { font-size: 1rem; }
+
+  /* FLOATING ADD BUTTON (admin only) */
+  #adminToggle {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 58px; height: 58px;
+    background: linear-gradient(135deg, var(--primary), #e84118);
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: none; /* hidden by default */
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 24px rgba(255,107,53,0.45);
+    z-index: 200;
+    transition: transform 0.2s;
+    font-size: 1.7rem;
+    color: #fff;
+  }
+  #adminToggle:hover { transform: scale(1.1) rotate(45deg); }
+  #adminToggle.active { transform: rotate(45deg); background: linear-gradient(135deg,#e84118,var(--primary)); }
+
+  /* SECRET ADMIN UNLOCK AREA */
+  #secretArea {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(26,26,46,0.7);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 300;
+  }
+  #secretArea.visible { display: flex; }
+  .unlock-box {
+    background: #fff;
+    border-radius: 20px;
+    padding: 36px 32px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  }
+  .unlock-box h3 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.4rem;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+  .unlock-box p { font-size: 0.82rem; color: var(--muted); margin-bottom: 18px; }
+  .unlock-box input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 2px solid #e0d6d0;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    transition: border 0.2s;
+    text-align: center;
+    letter-spacing: 3px;
+  }
+  .unlock-box input:focus { border-color: var(--primary); }
+  .unlock-box button {
+    margin-top: 14px;
+    width: 100%;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 11px;
+    border-radius: 10px;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .unlock-error { color: #e84118; font-size: 0.8rem; margin-top: 8px; display: none; }
+  .cancel-link { display: block; margin-top: 12px; font-size: 0.8rem; color: var(--muted); cursor: pointer; }
+  .cancel-link:hover { color: var(--primary); }
+
+  /* ADD PRODUCT MODAL */
+  #addModal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(26,26,46,0.72);
+    backdrop-filter: blur(5px);
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 400;
+  }
+  #addModal.visible { display: flex; }
+  .modal-sheet {
+    background: #fff;
+    border-radius: 26px 26px 0 0;
+    padding: 28px 24px 36px;
+    width: 100%;
+    max-width: 540px;
+    animation: slideUp 0.3s cubic-bezier(.34,1.56,.64,1);
+    max-height: 92vh;
+    overflow-y: auto;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .modal-handle {
+    width: 40px; height: 4px;
+    background: #e0d6d0;
+    border-radius: 4px;
+    margin: 0 auto 20px;
+  }
+  .modal-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .field-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .field-group { margin-bottom: 16px; }
+
+  .image-upload-area {
+    border: 2px dashed #e0d0c8;
+    border-radius: 14px;
+    padding: 22px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .image-upload-area:hover { border-color: var(--primary); background: #fff5f2; }
+  .image-upload-area input[type="file"] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer;
+  }
+  .upload-preview {
+    width: 100%; height: 140px;
+    object-fit: cover;
+    border-radius: 10px;
+    display: none;
+    margin-bottom: 8px;
+  }
+  .upload-icon { font-size: 2rem; margin-bottom: 6px; }
+  .upload-hint { font-size: 0.8rem; color: var(--muted); }
+
+  .form-input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 2px solid #ede5e0;
+    border-radius: 12px;
+    font-size: 0.92rem;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    transition: border 0.18s;
+    color: var(--text);
+  }
+  .form-input:focus { border-color: var(--primary); }
+
+  .platform-select {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .plat-option {
+    padding: 9px 8px;
+    border: 2px solid #ede5e0;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: all 0.15s;
+  }
+  .plat-option.selected { border-color: var(--primary); background: #fff5f2; color: var(--primary); }
+
+  .submit-btn {
+    width: 100%;
+    background: linear-gradient(90deg, var(--primary), #ff8c42);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 14px;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 6px;
+    letter-spacing: 0.4px;
+    transition: opacity 0.18s;
+  }
+  .submit-btn:hover { opacity: 0.88; }
+  .close-modal {
+    position: absolute;
+    top: 16px; right: 20px;
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: var(--muted);
+  }
+
+  /* ADMIN DELETE BUTTON ON CARDS */
+  .delete-card-btn {
+    position: absolute;
+    top: 8px; right: 8px;
+    background: rgba(255,255,255,0.92);
+    border: none;
+    border-radius: 50%;
+    width: 28px; height: 28px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: #e84118;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    z-index: 10;
+    transition: background 0.15s;
+  }
+  .delete-card-btn:hover { background: #ffe0d9; }
+  body.admin-mode .delete-card-btn { display: flex; }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ADMIN BANNER */
+  #adminBanner {
+    display: none;
+    background: linear-gradient(90deg, var(--dark), #0f3460);
+    color: #fff;
+    text-align: center;
+    padding: 8px;
+    font-size: 0.78rem;
+    letter-spacing: 1px;
+  }
+  body.admin-mode #adminBanner { display: block; }
+
+  /* SECRET TAP AREA */
+  #secretTap {
+    position: fixed;
+    bottom: 0; left: 0;
+    width: 60px; height: 60px;
+    z-index: 100;
+    cursor: default;
+  }
+
+  @media(max-width: 400px) {
+    .brand-name { font-size: 2rem; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Admin Banner -->
+<div id="adminBanner">🔐 Admin Mode Active — Sirf aap dekh sakte hain yeh</div>
+
+<!-- Header -->
+<div class="header">
+  <div class="welcome-text">✨ Welcome to</div>
+  <div class="brand-name">Product <span>Market</span></div>
+  <div class="tagline">Aapke pasand ke best products ek jagah</div>
+</div>
+
+<!-- Products -->
+<div class="products-section">
+  <div class="section-label">🛍️ Hamare Products</div>
+  <div class="products-grid" id="productsGrid">
+    <!-- Products load here -->
+  </div>
+</div>
+
+<!-- Secret tap area (bottom-left corner, 5 taps = admin unlock) -->
+<div id="secretTap"></div>
+
+<!-- Admin FAB -->
+<button id="adminToggle" title="Product Add Karo">+</button>
+
+<!-- Secret Unlock Overlay -->
+<div id="secretArea">
+  <div class="unlock-box">
+    <div style="font-size:2rem;margin-bottom:8px;">🔐</div>
+    <h3>Admin Access</h3>
+    <p>Admin password daalo</p>
+    <input type="password" id="passwordInput" placeholder="••••••" maxlength="20" />
+    <div class="unlock-error" id="unlockError">❌ Galat password!</div>
+    <button onclick="checkPassword()">Unlock Karo</button>
+    <span class="cancel-link" onclick="closeSecret()">Cancel</span>
+  </div>
+</div>
+
+<!-- Add Product Modal -->
+<div id="addModal">
+  <div class="modal-sheet" style="position:relative;">
+    <button class="close-modal" onclick="closeModal()">✕</button>
+    <div class="modal-handle"></div>
+    <div class="modal-title">➕ Naya Product Add Karo</div>
+
+    <div class="field-group">
+      <label class="field-label">Product Image</label>
+      <div class="image-upload-area" id="uploadArea">
+        <input type="file" id="imageFile" accept="image/*" onchange="previewImage(event)" />
+        <img id="uploadPreview" class="upload-preview" src="" alt="preview" />
+        <div id="uploadPlaceholder">
+          <div class="upload-icon">📸</div>
+          <div class="upload-hint">Image choose karo ya yahan drop karo</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Product Ka Naam</label>
+      <input class="form-input" type="text" id="productName" placeholder="e.g. Wireless Earbuds, Saree..." />
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Product Link (Amazon/Flipkart/Meesho)</label>
+      <input class="form-input" type="url" id="productLink" placeholder="https://..." />
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Platform</label>
+      <div class="platform-select">
+        <div class="plat-option" onclick="selectPlatform('amazon', this)">🛒 Amazon</div>
+        <div class="plat-option" onclick="selectPlatform('flipkart', this)">🔵 Flipkart</div>
+        <div class="plat-option" onclick="selectPlatform('meesho', this)">💜 Meesho</div>
+        <div class="plat-option" onclick="selectPlatform('other', this)">🌐 Other</div>
+      </div>
+    </div>
+
+    <button class="submit-btn" onclick="addProduct()">✅ Product Save Karo</button>
+  </div>
+</div>
+
+<script>
+// ========== CONFIG ==========
+const ADMIN_PASSWORD = "market123"; // Yahan apna password change karo
+// ============================
+
+let products = JSON.parse(localStorage.getItem('pm_products') || '[]');
+let isAdmin = false;
+let selectedPlatform = '';
+let uploadedImageData = '';
+let secretTapCount = 0;
+let secretTapTimer = null;
+
+// Platform detect from URL
+function detectPlatform(url) {
+  if (!url) return 'other';
+  if (url.includes('amazon')) return 'amazon';
+  if (url.includes('flipkart')) return 'flipkart';
+  if (url.includes('meesho')) return 'meesho';
+  return 'other';
+}
+
+function platformBadge(p) {
+  const map = {
+    amazon: ['badge-amazon', '🛒 Amazon'],
+    flipkart: ['badge-flipkart', '🔵 Flipkart'],
+    meesho: ['badge-meesho', '💜 Meesho'],
+    other: ['badge-other', '🌐 Store']
+  };
+  return map[p] || map.other;
+}
+
+function renderProducts() {
+  const grid = document.getElementById('productsGrid');
+  grid.innerHTML = '';
+  if (products.length === 0) {
+    grid.innerHTML = `<div class="empty-state">
+      <div class="emoji">🛍️</div>
+      <p>Abhi koi product nahi hai.<br>Admin se products add karwayein!</p>
+    </div>`;
+    return;
+  }
+  products.forEach((p, i) => {
+    const platform = p.platform || detectPlatform(p.link);
+    const [badgeClass, badgeText] = platformBadge(platform);
+    const card = document.createElement('div');
+    card.style.animationDelay = (i * 0.07) + 's';
+    card.className = 'product-card';
+    card.innerHTML = `
+      <button class="delete-card-btn" onclick="deleteProduct(${i}, event)" title="Delete">🗑</button>
+      <img src="${p.image}" alt="${p.name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22185%22><rect fill=%22%23f5ece8%22 width=%22200%22 height=%22185%22/><text x=%2250%%22 y=%2250%%22 font-size=%2240%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>📦</text></svg>'" />
+      <div class="product-info">
+        <div class="product-name">${p.name}</div>
+        <span class="platform-badge ${badgeClass}">${badgeText}</span>
+      </div>
+      <a class="buy-btn" href="${p.link}" target="_blank" rel="noopener">Kharido →</a>
+    `;
+    // Whole card click also opens link
+    card.addEventListener('click', function(e) {
+      if (e.target.classList.contains('buy-btn') || e.target.classList.contains('delete-card-btn')) return;
+      window.open(p.link, '_blank');
+    });
+    grid.appendChild(card);
+  });
+}
+
+function deleteProduct(index, e) {
+  e.stopPropagation();
+  if (confirm('Yeh product delete karna chahte hain?')) {
+    products.splice(index, 1);
+    localStorage.setItem('pm_products', JSON.stringify(products));
+    renderProducts();
+  }
+}
+
+// Secret tap to open admin
+document.getElementById('secretTap').addEventListener('click', function() {
+  secretTapCount++;
+  clearTimeout(secretTapTimer);
+  if (secretTapCount >= 5) {
+    secretTapCount = 0;
+    if (!isAdmin) openSecret();
+  }
+  secretTapTimer = setTimeout(() => { secretTapCount = 0; }, 2000);
+});
+
+function openSecret() {
+  document.getElementById('secretArea').classList.add('visible');
+  document.getElementById('passwordInput').value = '';
+  document.getElementById('unlockError').style.display = 'none';
+  setTimeout(() => document.getElementById('passwordInput').focus(), 100);
+}
+function closeSecret() {
+  document.getElementById('secretArea').classList.remove('visible');
+}
+
+document.getElementById('passwordInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') checkPassword();
+});
+
+function checkPassword() {
+  const val = document.getElementById('passwordInput').value;
+  if (val === ADMIN_PASSWORD) {
+    isAdmin = true;
+    document.body.classList.add('admin-mode');
+    document.getElementById('adminToggle').style.display = 'flex';
+    closeSecret();
+    renderProducts();
+  } else {
+    document.getElementById('unlockError').style.display = 'block';
+  }
+}
+
+// FAB
+document.getElementById('adminToggle').addEventListener('click', function() {
+  this.classList.toggle('active');
+  document.getElementById('addModal').classList.toggle('visible');
+  if (!document.getElementById('addModal').classList.contains('visible')) resetForm();
+});
+
+function closeModal() {
+  document.getElementById('addModal').classList.remove('visible');
+  document.getElementById('adminToggle').classList.remove('active');
+  resetForm();
+}
+
+function resetForm() {
+  document.getElementById('productName').value = '';
+  document.getElementById('productLink').value = '';
+  document.getElementById('uploadPreview').style.display = 'none';
+  document.getElementById('uploadPlaceholder').style.display = 'block';
+  uploadedImageData = '';
+  selectedPlatform = '';
+  document.querySelectorAll('.plat-option').forEach(o => o.classList.remove('selected'));
+}
+
+function previewImage(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    uploadedImageData = ev.target.result;
+    const preview = document.getElementById('uploadPreview');
+    preview.src = uploadedImageData;
+    preview.style.display = 'block';
+    document.getElementById('uploadPlaceholder').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+function selectPlatform(p, el) {
+  selectedPlatform = p;
+  document.querySelectorAll('.plat-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function addProduct() {
+  const name = document.getElementById('productName').value.trim();
+  const link = document.getElementById('productLink').value.trim();
+  if (!name) { alert('Product ka naam daalna zaroori hai!'); return; }
+  if (!link) { alert('Product ki link daalna zaroori hai!'); return; }
+  if (!uploadedImageData) { alert('Product ki image upload karo!'); return; }
+
+  const platform = selectedPlatform || detectPlatform(link);
+  products.unshift({ name, link, image: uploadedImageData, platform });
+  localStorage.setItem('pm_products', JSON.stringify(products));
+  renderProducts();
+  closeModal();
+}
+
+// Auto-detect platform from link input
+document.getElementById('productLink').addEventListener('input', function() {
+  const p = detectPlatform(this.value);
+  if (p !== 'other' || this.value.length > 5) {
+    document.querySelectorAll('.plat-option').forEach(o => o.classList.remove('selected'));
+    const map = { amazon: 0, flipkart: 1, meesho: 2, other: 3 };
+    const idx = map[p];
+    const opts = document.querySelectorAll('.plat-option');
+    if (opts[idx]) opts[idx].classList.add('selected');
+    selectedPlatform = p;
+  }
+});
+
+// Init
+renderProducts();
+</script>
+</body>
+</html>
